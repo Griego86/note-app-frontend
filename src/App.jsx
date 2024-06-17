@@ -2,12 +2,14 @@ import './App.css'
 import axios from 'axios'
 import noteService from './services/notes'
 import Note from './components/Note'
+import Notification from './components/Notification'
 import { useEffect, useState } from 'react'
 
 const App = () => {
   const [notes, setNotes] = useState([])
   const [newNote, setNewNote] = useState('')
   const [showAll, setShowAll] = useState(true)
+  const [errorMessage, setErrorMessage] = useState('some error happened...')
 
   useEffect(() => {
     noteService
@@ -18,7 +20,6 @@ const App = () => {
   }, [])
 
   const toggleImportanceOf = id => {
-    const url = `http://localhost:3001/notes/${id}`
     const note = notes.find(note => note.id === id)
     const changedNote = {...note, important: !note.important}
 
@@ -58,6 +59,7 @@ const App = () => {
   return (
     <div>
       <h1>Notes</h1>
+      <Notification message={errorMessage} />
       <div>
         <button onClick={() => setShowAll(!showAll)}>
           show {showAll ? 'important' : 'all'}
