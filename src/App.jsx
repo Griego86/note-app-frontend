@@ -23,11 +23,16 @@ const App = (props) => {
     setNewNote(e.target.value)
   }
 
-  const notesToShow = showAll ? notes : notes.filter(note => note.important)
+  const notesToShow = showAll ? notes : notes.filter(note => note.important) // note.important same as note.important === true
 
   return (
     <div>
       <h1>Notes</h1>
+      <div>
+        <button onClick={() => setShowAll(!showAll)}>
+          show {showAll ? 'important' : 'all'}
+        </button>
+      </div>
       <ul>
         {notesToShow.map(note => 
           <Note key={note.id} note={note} />
