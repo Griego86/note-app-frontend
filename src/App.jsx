@@ -1,4 +1,5 @@
 import './App.css'
+import Note from './components/Note'
 
 const App = ({notes}) => {
   return (
@@ -6,9 +7,7 @@ const App = ({notes}) => {
       <h1>Notes</h1>
       <ul>
         {notes.map(note => 
-          <li key={note.id}>
-            {note.content}
-          </li>
+          <Note key={note.id} note={note} />
         )}
       </ul>
     </div>
