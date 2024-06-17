@@ -1,5 +1,6 @@
 import './App.css'
 import axios from 'axios'
+import noteService from './services/notes'
 import Note from './components/Note'
 import { useEffect, useState } from 'react'
 
@@ -9,8 +10,8 @@ const App = () => {
   const [showAll, setShowAll] = useState(true)
 
   useEffect(() => {
-    axios 
-      .get('http://localhost:3001/notes')
+    noteService
+      .getAll()
       .then(res => {
         setNotes(res.data)
       })
@@ -21,8 +22,8 @@ const App = () => {
     const note = notes.find(note => note.id === id)
     const changedNote = {...note, important: !note.important}
 
-    axios
-      .put(url, changedNote)
+    noteService
+      .update(id, changedNote)
       .then(res => {
         setNotes(notes.map(note => note.id !== id ? note : res.data))
       })
@@ -36,8 +37,8 @@ const App = () => {
       id: notes.length +1
     }
 
-    axios
-      .post('http://localhost:3001/notes', noteObject)
+    noteService
+      .create(noteObject)
       .then(res => {
         setNotes(notes.concat(res.data))
         setNewNote('')
@@ -48,7 +49,7 @@ const App = () => {
     setNewNote(e.target.value)
   }
 
-  const notesToShow = showAll ? notes : notes.filter(note => note.important) // note.important same as note.important === true
+  const notesToShow = showAll ? notes : notes.filter(note => note.important) 
 
   return (
     <div>
