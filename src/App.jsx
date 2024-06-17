@@ -1,15 +1,15 @@
 import './App.css'
-import axios from 'axios'
 import noteService from './services/notes'
 import Note from './components/Note'
 import Notification from './components/Notification'
+import Footer from './components/Footer'
 import { useEffect, useState } from 'react'
 
 const App = () => {
   const [notes, setNotes] = useState([])
   const [newNote, setNewNote] = useState('')
   const [showAll, setShowAll] = useState(true)
-  const [errorMessage, setErrorMessage] = useState('some error happened...')
+  const [errorMessage, setErrorMessage] = useState(null)
 
   useEffect(() => {
     noteService
@@ -82,6 +82,7 @@ const App = () => {
         />
         <button type='submit'>save</button>
       </form>
+      <Footer />
     </div>
   )
 }
