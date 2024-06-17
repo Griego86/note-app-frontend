@@ -23,7 +23,7 @@ const App = (props) => {
     setNewNote(e.target.value)
   }
 
-  const notesToShow = showAll ? notes : notes.filter(note => note.important === true)
+  const notesToShow = showAll ? notes : notes.filter(note => note.important)
 
   return (
     <div>
