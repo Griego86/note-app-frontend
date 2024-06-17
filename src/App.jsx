@@ -4,10 +4,22 @@ import { useState } from 'react'
 
 const App = (props) => {
   const [notes, setNotes] = useState(props.notes)
+  const [newNote, setNewNote] = useState('')
 
   const addNote = (e) => {
     e.preventDefault()
-    console.log(e.target)
+    const noteObject = {
+      content: newNote,
+      important: Math.random() < 0.5,
+      id: notes.length +1
+    }
+
+    setNotes(notes.concat(noteObject))
+    setNewNote('')
+  }
+
+  const handleNoteChange = (e) => {
+    setNewNote(e.target.value)
   }
 
   return (
@@ -19,7 +31,10 @@ const App = (props) => {
         )}
       </ul>
       <form onSubmit={addNote}>
-        <input type="text" />
+        <input 
+          value={newNote}
+          onChange={handleNoteChange} 
+        />
         <button type='submit'>save</button>
       </form>
     </div>
