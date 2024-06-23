@@ -74,7 +74,7 @@ const App = () => {
     try {
       const user = await loginService.login({ username, password })
 
-      window.localStorage.setItem('LoggedNoteappUser', JSON.stringify(user))
+      window.localStorage.setItem('loggedNoteappUser', JSON.stringify(user))
 
       noteService.setToken(user.token)
       setUser(user)
