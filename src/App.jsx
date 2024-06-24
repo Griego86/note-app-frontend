@@ -10,7 +10,6 @@ import NoteForm from './components/NoteForm'
 
 const App = () => {
   const [notes, setNotes] = useState([])
-  const [newNote, setNewNote] = useState('')
   const [showAll, setShowAll] = useState(true)
   const [errorMessage, setErrorMessage] = useState(null)
   const [username, setUsername] = useState('')
@@ -35,15 +34,6 @@ const App = () => {
       })
   }, [])
 
-  const addNote = (newObject) => {
-    noteService
-      .create(noteObject)
-        .then(returnedNote => {
-        setNotes(notes.concat(returnedNote))
-        setNewNote('')
-      })
-  }
-
   const toggleImportanceOf = id => {
     const note = notes.find(n => n.id === id)
     const changedNote = { ...note, important: !note.important }
@@ -61,10 +51,6 @@ const App = () => {
           setErrorMessage(null)
         }, 5000)
       })
-  }
-
-  const handleNoteChange = (event) => {
-    setNewNote(event.target.value)
   }
 
   const handleLogin = async (event) => {
@@ -87,6 +73,14 @@ const App = () => {
         setErrorMessage(null)
       }, 5000)
     }
+  }
+
+  const addNote = (noteObject) => {
+    noteService
+      .create(noteObject)
+      .then(returnedNote => {
+        setNotes(notes.concat(returnedNote))
+      })
   }
 
   const notesToShow = showAll
@@ -115,12 +109,6 @@ const App = () => {
       </div>
     )
   }
-  
-  const noteForm = () => (
-    <Togglable buttonLabel='new note'>
-      <NoteForm createNote={addNote} />
-    </Togglable>
-  )
 
   return (
     <div>
@@ -132,9 +120,7 @@ const App = () => {
        <p>{user.name} logged in</p>
        <Togglable buttonLabel="new note">
         <NoteForm
-          onSubmit={addNote}
-          value={newNote}
-          handleChange={handleNoteChange}
+          createNote={addNote}
         />
       </Togglable>
       </div>
