@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import Note from './components/Note'
 import Notification from './components/Notification'
 import Footer from './components/Footer'
@@ -110,6 +110,8 @@ const App = () => {
     )
   }
 
+  const noteFormRef = useRef()
+
   return (
     <div>
       <h1>Notes</h1>
@@ -118,7 +120,7 @@ const App = () => {
       {!user && loginForm()}
       {user && <div>
        <p>{user.name} logged in</p>
-       <Togglable buttonLabel="new note">
+       <Togglable buttonLabel="new note" ref={noteFormRef}>
         <NoteForm
           createNote={addNote}
         />
